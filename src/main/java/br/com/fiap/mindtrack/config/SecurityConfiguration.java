@@ -1,6 +1,5 @@
 package br.com.fiap.mindtrack.config;
 
-
 import br.com.fiap.mindtrack.service.CustomerDetailsService;
 import br.com.fiap.mindtrack.service.OAuth2LoginService;
 import org.springframework.context.annotation.Bean;
@@ -14,7 +13,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-
 
 @EnableWebSecurity
 @EnableMethodSecurity
@@ -35,7 +33,6 @@ public class SecurityConfiguration {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        // Usa o CustomerDetailsService para o formLogin
         return customerDetailsService;
     }
 
@@ -52,41 +49,45 @@ public class SecurityConfiguration {
         return new CustomOAuth2LoginSuccessHandler(oAuth2LoginService);
     }
 
+    // REMOVIDO O BEAN 'clientRegistrationRepository' - O Spring agora lerá do application.properties
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
-        http.
-                authorizeHttpRequests( auth -> auth
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+                .csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
-                                "/css/**", "/js/**", "/images/**", "/webjars/**", "/h2-console/**",
-                                "/svg/**",
-                                "/login", "/health-check", "/register", "/form", "/login?error=true", "/error"
+                                "/css/**","/js/**","/images/**","/webjars/**",
+                                "/h2-console/**","/svg/**",
+                                "/login", "/login/**",
+                                "/oauth2/**",
+                                "/login/oauth2/code/**",
+                                "/register","/health-check",
+                                "/form","/error"
                         ).permitAll()
-                        .anyRequest()
-                        .authenticated()
+                        .anyRequest().authenticated()
                 )
-                .formLogin( form -> form
+                .formLogin(form -> form
                         .loginPage("/login")
-                        .loginProcessingUrl("/login")
-                        .defaultSuccessUrl("/index")
+                        .loginProcessingUrl("/perform_login")
+                        .defaultSuccessUrl("/index", true)
                         .usernameParameter("username")
                         .passwordParameter("password")
                         .failureUrl("/login?error=true")
                         .permitAll()
                 )
-                .oauth2Login( oauth2 -> oauth2
+                .oauth2Login(oauth2 -> oauth2
                         .loginPage("/login")
+                        // Mantivemos a conexão com o seu Handler customizado
                         .successHandler(oAuth2LoginSuccessHandler())
-                        .permitAll()
                 )
                 .logout(logout -> logout
-                .logoutSuccessUrl("/login")
-                .invalidateHttpSession(true)
-                .deleteCookies("JSESSIONID")
-                .permitAll()
-        );
+                        .logoutSuccessUrl("/login")
+                        .invalidateHttpSession(true)
+                        .deleteCookies("JSESSIONID")
+                        .permitAll()
+                );
 
         return http.build();
-
     }
 }
