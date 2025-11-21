@@ -9,6 +9,6 @@ public class NavigationController {
 
     @GetMapping({"/index", "/", "/home"})
     public String showIndex(){
-        return "layout/base";
+        return "index";
     }
 }

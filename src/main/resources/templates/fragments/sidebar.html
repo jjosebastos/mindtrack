@@ -1,69 +1,69 @@
-<head>
-    <script>
-        // Configuração para recriar as cores da imagem
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'brand-teal': '#1096AD', // Cor principal da esquerda e do botão
-                        'brand-blue-light': '#2DBFB7', // Início do gradiente da direita
-                        'brand-blue-dark': '#0f3c7A', // Fim do gradiente da direita
-                    },
-                },
-            },
-        };
-    </script>
-</head>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
 
-<div th:fragment="sidebar" id="app-sidebar" class="col-start-1 row-span-2 flex flex-col shadow-lg border-r border-gray-200 transition-all duration-300">
+<aside th:fragment="sidebar" class="bg-white h-full flex flex-col text-gray-600 transition-all duration-300 border-r border-gray-200">
 
-    <div class="p-6 flex justify-between items-center h-20">
-        <span class="logo font-bold text-xl text-gray-800 tracking-wider transition-opacity duration-300" id="logo-text">
-            Logo
-        </span>
-        <button id="sidebar-toggle" class="p-2 rounded-full hover:bg-gray-100 text-gray-600 transition duration-300">
-            <i class="fas fa-chevron-left text-lg transform transition duration-300"></i>
+    <div class="h-16 flex items-center justify-between px-4 border-b border-gray-100">
+        <div class="flex items-center gap-3 font-bold text-xl tracking-wider sidebar-text overflow-hidden whitespace-nowrap transition-all duration-300">
+            <div class="w-8 h-8 rounded-lg bg-[#1096AD] flex-shrink-0 flex items-center justify-center text-white shadow-md shadow-cyan-500/20">
+                <i class="fa-solid fa-brain"></i>
+            </div>
+            <span class="text-gray-700">MindTrack</span>
+        </div>
+
+        <button id="sidebar-toggle" class="p-2 rounded-lg hover:bg-gray-100 text-gray-400 hover:text-[#1096AD] transition-colors focus:outline-none">
+            <i class="fa-solid fa-bars"></i>
         </button>
     </div>
 
-    <nav class="flex-grow overflow-y-auto">
-        <ul>
-            <li class="nav-item">
-                <a th:href="@{/}" class="nav-link flex items-center p-3 mx-2 rounded-lg text-gray-700 hover:bg-cyan-700 hover:text-white transition-all duration-200">
-                    <i class="fas fa-home w-6 h-6 text-xl"></i>
-                    <span class="ml-4 font-medium transition-opacity duration-300 whitespace-nowrap">Home</span>
-                </a>
-            </li>
+    <nav class="flex-1 flex flex-col py-6 space-y-1 px-3 overflow-y-auto overflow-x-hidden scrollbar-thin scrollbar-thumb-gray-200">
 
-            <li class="nav-item">
-                <a th:href="@{/dashboards}" class="nav-link flex items-center p-3 mx-2 rounded-lg text-gray-700 hover:bg-cyan-700 hover:text-white transition-all duration-200">
-                    <i class="fas fa-chart-bar w-6 h-6 text-xl"></i>
-                    <span class="ml-4 font-medium transition-opacity duration-300 whitespace-nowrap">Dashboards</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a th:href="@{/mood-check}" class="nav-link flex items-center p-3 mx-2 rounded-lg text-gray-700 hover:bg-cyan-700 hover:text-white transition-all duration-200">
-                    <i class="fas fa-solid fa-plus w-6 h-6 text-xl"></i>
-                    <span class="ml-4 font-medium transition-opacity duration-300 whitespace-nowrap">Registrar</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a th:href="@{/settings}" class="nav-link flex items-center p-3 mx-2 rounded-lg text-gray-700 hover:bg-cyan-700 hover:text-white transition-all duration-200">
-                    <i class="fas fa-solid fa-gear w-6 h-6 text-xl"></i>
-                    <span class="ml-4 font-medium transition-opacity duration-300 whitespace-nowrap">Ajustes</span>
-                </a>
-            </li>
-        </ul>
+        <a th:href="@{/dashboard}"
+           class="flex items-center gap-4 px-3 py-3 rounded-xl transition-all duration-200 hover:bg-[#1096AD]/10 group text-gray-500 hover:text-[#1096AD]">
+            <i class="fa-solid fa-chart-pie w-6 text-center text-lg flex-shrink-0 group-hover:scale-110 transition-transform"></i>
+            <span class="font-medium sidebar-text whitespace-nowrap transition-opacity duration-300">Dashboard</span>
+        </a>
+
+        <a th:href="@{/mood}"
+           class="flex items-center gap-4 px-3 py-3 rounded-xl transition-all duration-200 hover:bg-[#1096AD]/10 group text-gray-500 hover:text-[#1096AD]">
+            <i class="fa-regular fa-face-smile w-6 text-center text-lg flex-shrink-0 group-hover:scale-110 transition-transform"></i>
+            <span class="font-medium sidebar-text whitespace-nowrap transition-opacity duration-300">Registrar Humor</span>
+        </a>
+
+        <a th:href="@{/history}"
+           class="flex items-center gap-4 px-3 py-3 rounded-xl transition-all duration-200 hover:bg-[#1096AD]/10 group text-gray-500 hover:text-[#1096AD]">
+            <i class="fa-solid fa-clock-rotate-left w-6 text-center text-lg flex-shrink-0 group-hover:scale-110 transition-transform"></i>
+            <span class="font-medium sidebar-text whitespace-nowrap transition-opacity duration-300">Histórico</span>
+        </a>
+
+        <div class="my-2 border-t border-gray-100 sidebar-text"></div>
+
+        <a th:href="@{/settings}"
+           class="flex items-center gap-4 px-3 py-3 rounded-xl transition-all duration-200 hover:bg-gray-100 group text-gray-500 hover:text-gray-900">
+            <i class="fa-solid fa-gear w-6 text-center text-lg flex-shrink-0"></i>
+            <span class="font-medium sidebar-text whitespace-nowrap transition-opacity duration-300">Ajustes</span>
+        </a>
     </nav>
 
-    <div class="p-4 border-t border-gray-200 flex items-center justify-start h-20">
-        <div class="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center text-gray-600 mr-3 flex-shrink-0">
-            <i class="fas fa-user text-xl"></i>
+    <div class="border-t border-gray-100 p-4 bg-gray-50/50">
+
+        <form th:action="@{/logout}" method="post">
+            <button type="submit" class="w-full flex items-center gap-4 px-3 py-2 rounded-xl text-red-400 hover:bg-red-50 hover:text-red-600 transition-all duration-200 group">
+                <i class="fa-solid fa-arrow-right-from-bracket w-6 text-center text-lg flex-shrink-0"></i>
+                <span class="font-medium sidebar-text whitespace-nowrap transition-opacity duration-300">Sair</span>
+            </button>
+        </form>
+
+        <div class="mt-4 flex items-center gap-3 px-2 sidebar-text overflow-hidden transition-all duration-300">
+            <div class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-gray-600 font-bold border border-gray-300">
+                <span th:text="${#authentication.name.substring(0,1)}">U</span>
+            </div>
+            <div class="flex flex-col min-w-0">
+                <span class="text-sm font-bold text-gray-700 truncate" th:text="${#authentication.name}">Usuário</span>
+                <span class="text-xs text-[#1096AD] font-medium truncate">Online</span>
+            </div>
         </div>
-        <div class="flex flex-col overflow-hidden transition-opacity duration-300 whitespace-nowrap" id="user-info">
-            <span class="font-semibold text-gray-800 text-sm">User</span>
-            <span class="text-gray-500 text-xs truncate">user@email.com</span>
-        </div>
-        <i class="fas fa-ellipsis-v text-gray-400 ml-auto cursor-pointer flex-shrink-0 transition-opacity duration-300" id="user-options"></i>
     </div>
-</div>
+
+</aside>
+</html>

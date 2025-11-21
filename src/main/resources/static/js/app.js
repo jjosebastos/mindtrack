@@ -1,52 +1,35 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const appContainer = document.getElementById('app-container');
+    console.log("App.js carregado!"); // Teste se o arquivo carregou
+
+    const sidebarWrapper = document.getElementById('sidebar-wrapper');
     const sidebarToggle = document.getElementById('sidebar-toggle');
-    const appMain = document.getElementById('app-main');
-    const appFooter = document.getElementById('app-footer');
+    const sidebarTexts = document.querySelectorAll('.sidebar-text');
 
-    const navSpans = document.querySelectorAll('.nav-link span');
-    const userInfoDiv = document.getElementById('user-info');
-    const userOptions = document.getElementById('user-options');
-    const logoText = document.getElementById('logo-text');
-    const toggleIcon = sidebarToggle.querySelector('i');
+    // Debug: Verifica se encontrou os elementos
+    if (!sidebarWrapper) console.error("ERRO: Não encontrei o elemento com id='sidebar-wrapper' no base.html");
+    if (!sidebarToggle) console.error("ERRO: Não encontrei o elemento com id='sidebar-toggle' no sidebar.html");
 
-    const EXPANDED_WIDTH = '250px';
-    const COLLAPSED_WIDTH = '80px';
+    if (sidebarToggle && sidebarWrapper) {
+        sidebarToggle.addEventListener('click', (e) => {
+            e.preventDefault(); // Previne comportamentos estranhos de botão
+            console.log("Botão clicado!");
 
-    appContainer.style.gridTemplateRows = '1fr 40px';
-    appContainer.style.gridTemplateColumns = `${EXPANDED_WIDTH} 1fr`;
-    appContainer.setAttribute('data-sidebar-expanded', 'true');
-    appMain.style.gridColumnStart = 2;
-    appFooter.style.gridColumnStart = 2;
-    const toggleSidebar = () => {
-        const isCurrentlyExpanded = appContainer.getAttribute('data-sidebar-expanded') === 'true';
+            const isExpanded = sidebarWrapper.classList.contains('w-64');
 
-        if (isCurrentlyExpanded) {
-            appContainer.style.gridTemplateColumns = `${COLLAPSED_WIDTH} 1fr`;
-            appContainer.setAttribute('data-sidebar-expanded', 'false');
-            toggleIcon.classList.add('rotate-180');
-            navSpans.forEach(span => {
-                span.classList.add('hidden', 'opacity-0');
-            });
-            userInfoDiv.classList.add('hidden', 'opacity-0');
-            userOptions.classList.add('opacity-0');
-            logoText.classList.add('opacity-0');
-
-        } else {
-            appContainer.style.gridTemplateColumns = `${EXPANDED_WIDTH} 1fr`;
-            appContainer.setAttribute('data-sidebar-expanded', 'true');
-            toggleIcon.classList.remove('rotate-180');
-
-            navSpans.forEach(span => {
-                span.classList.remove('hidden', 'opacity-0');
-            });
-            userInfoDiv.classList.remove('hidden', 'opacity-0');
-            userOptions.classList.remove('opacity-0');
-            logoText.classList.remove('opacity-0');
-        }
-        appMain.style.gridColumnStart = 2;
-        appFooter.style.gridColumnStart = 2;
-    };
-    sidebarToggle.addEventListener('click', toggleSidebar);
+            if (isExpanded) {
+                // FECHAR
+                console.log("Fechando sidebar...");
+                sidebarWrapper.classList.replace('w-64', 'w-20');
+                sidebarTexts.forEach(text => text.classList.add('hidden'));
+            } else {
+                // ABRIR
+                console.log("Abrindo sidebar...");
+                sidebarWrapper.classList.replace('w-20', 'w-64');
+                // Pequeno delay para suavidade
+                setTimeout(() => {
+                    sidebarTexts.forEach(text => text.classList.remove('hidden'));
+                }, 150);
+            }
+        });
+    }
 });
-

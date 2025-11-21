@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/base :: layout(~{::#home-content})}">
+<head>
+    <title>Início</title>
+</head>
+<body>
+
+<div id="home-content" class="flex flex-col gap-6">
+
+    <div th:if="${message}" id="success-alert" class="alert alert-success shadow-lg max-w-xl mx-auto rounded-xl fixed top-4 left-1/2 transform -translate-x-1/2 z-50 text-white">
+        <i class="fa-solid fa-circle-check"></i>
+        <span th:text="${message}">Bem-vindo!</span>
+    </div>
+
+    <div class="relative bg-gradient-to-r from-brand-teal to-teal-600 rounded-3xl p-8 md:p-10 shadow-xl text-white overflow-hidden shrink-0">
+        <div class="absolute top-0 right-0 w-64 h-64 bg-white opacity-10 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none"></div>
+        <div class="relative z-10 grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+            <div class="md:col-span-2 space-y-4">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/20 border border-white/30 text-white text-xs font-bold uppercase">
+                    <span class="w-2 h-2 rounded-full bg-white animate-pulse"></span>
+                    Sistema Online
+                </div>
+                <h1 class="text-4xl md:text-5xl font-bold leading-tight">
+                    Olá, <span th:text="${#authentication.name}">Visitante</span>!
+                </h1>
+                <p class="text-teal-50 text-lg max-w-xl">
+                    Sua central de monitoramento emocional. Registre, acompanhe e evolua com clareza.
+                </p>
+                <div class="pt-4 flex gap-4">
+                    <a th:href="@{/mood}" class="btn bg-white text-brand-teal hover:bg-gray-100 border-none px-8 py-3 rounded-xl text-lg font-bold shadow-md">
+                        <i class="fa-regular fa-face-smile mr-2"></i> Registrar Humor
+                    </a>
+                </div>
+            </div>
+            <div class="hidden md:flex justify-center opacity-90">
+                <i class="fa-solid fa-brain text-9xl text-white/40 drop-shadow-sm"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex items-center gap-3 border-l-4 border-brand-teal pl-4 mt-4 shrink-0">
+        <h2 class="text-2xl font-bold text-gray-800">Visão Geral</h2>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 shrink-0 pb-6">
+        <div class="bg-white border border-gray-200 p-6 rounded-2xl shadow-sm hover:shadow-md hover:border-brand-teal transition-all group">
+            <div class="w-12 h-12 bg-teal-50 rounded-xl flex items-center justify-center mb-4 group-hover:bg-brand-teal group-hover:text-white transition-colors text-brand-teal">
+                <i class="fa-solid fa-chart-line text-xl"></i>
+            </div>
+            <h3 class="text-xl font-bold text-gray-800 mb-2">Monitoramento</h3>
+            <p class="text-gray-500 text-sm leading-relaxed">Acompanhe a variação do seu humor ao longo da semana com gráficos detalhados.</p>
+        </div>
+
+        <div class="bg-white border border-gray-200 p-6 rounded-2xl shadow-sm hover:shadow-md hover:border-brand-teal transition-all group">
+            <div class="w-12 h-12 bg-teal-50 rounded-xl flex items-center justify-center mb-4 group-hover:bg-brand-teal group-hover:text-white transition-colors text-brand-teal">
+                <i class="fa-solid fa-shield-halved text-xl"></i>
+            </div>
+            <h3 class="text-xl font-bold text-gray-800 mb-2">Segurança</h3>
+            <p class="text-gray-500 text-sm leading-relaxed">Seus dados são criptografados e acessíveis apenas por você.</p>
+        </div>
+
+        <div class="bg-white border border-gray-200 p-6 rounded-2xl shadow-sm hover:shadow-md hover:border-brand-teal transition-all group">
+            <div class="w-12 h-12 bg-teal-50 rounded-xl flex items-center justify-center mb-4 group-hover:bg-brand-teal group-hover:text-white transition-colors text-brand-teal">
+                <i class="fa-solid fa-lightbulb text-xl"></i>
+            </div>
+            <h3 class="text-xl font-bold text-gray-800 mb-2">Insights</h3>
+            <p class="text-gray-500 text-sm leading-relaxed">Identifique padrões comportamentais e melhore sua qualidade de vida.</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const alertElement = document.getElementById('success-alert');
+            if (alertElement) {
+                setTimeout(() => {
+                    alertElement.style.transition = 'opacity 0.5s ease-out';
+                    alertElement.style.opacity = '0';
+                    setTimeout(() => alertElement.remove(), 500);
+                }, 4000);
+            }
+        });
+    </script>
+
+</div>
+
+</body>
+</html>
