@@ -1,0 +1,10 @@
+services:
+  postgres:
+    image: 'postgres:latest'
+    container_name: mindtrack-db
+    environment:
+      - 'POSTGRES_DB=mindtrack'
+      - 'POSTGRES_PASSWORD=mindadm'
+      - 'POSTGRES_USER=mindadm'
+    ports:
+      - '5432:5432'

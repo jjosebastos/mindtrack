@@ -1,0 +1,14 @@
+:root {
+            --color-primary: #1096AD;
+            --color-black: #000000;
+            --color-white: #FFFFFF;
+            --color-secundary: #2DBFB7;
+        }
+
+.hover-bg-primary:hover {
+    background-color: var(--color-primary);
+}
+
+.hover-text-white:hover {
+    color: var(--color-white); /* Ou use a classe nativa do Tailwind: hover:text-white */
+}

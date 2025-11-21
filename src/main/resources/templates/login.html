@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log In - MindTrack</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // Configuração para recriar as cores da imagem
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-teal': '#2dbfA8', // Cor principal da esquerda e do botão
+                        'brand-blue-light': '#1d6fae', // Início do gradiente da direita
+                        'brand-blue-dark': '#0f3c7A', // Fim do gradiente da direita
+                    },
+                },
+            },
+        };
+    </script>
+</head>
+<body class="bg-gray-900">
+
+<div class="flex h-screen">
+
+    <div class="w-3/5 bg-brand-teal flex-col items-center justify-center text-gray-900 p-12 text-center hidden md:flex">
+        <h1 class="text-5xl font-bold">MindTrackLogo</h1>
+        <p class="text-2xl mt-4">Lorem ipsum indolor</p>
+    </div>
+
+    <div class="w-full md:w-2/5 bg-gradient-to-b from-brand-blue-light to-brand-blue-dark flex items-center justify-center p-8 md:p-12">
+
+        <div class="w-full max-w-md">
+            <h2 class="text-4xl font-bold text-white mb-8 text-center">Log In</h2>
+            <form th:action="@{/login}" method="post">
+
+                <div th:if="${param.error}" class="mb-4 p-3 bg-red-500 text-white rounded-md text-sm">
+                    Nome de usuário ou senha inválidos.
+                </div>
+
+                <div class="mb-5">
+                    <label for="username" class="block text-sm font-medium text-gray-200 mb-1">Username</label>
+                    <input type="text" id="username" name="username"
+                           class="w-full p-3 rounded-md bg-gray-200 text-gray-900 placeholder:text-gray-500
+                                      focus:outline-none focus:ring-2 focus:ring-brand-teal"
+                           placeholder="Digite seu nome de usuário...">
+                </div>
+
+                <div class="mb-6">
+                    <label for="password" class="block text-sm font-medium text-gray-200 mb-1">Senha</label>
+                    <input type="password" id="password" name="password"
+                           class="w-full p-3 rounded-md bg-gray-200 text-gray-900 placeholder:text-gray-500
+                                      focus:outline-none focus:ring-2 focus:ring-brand-teal"
+                           placeholder="Digite sua senha...">
+                </div>
+
+                <button type="submit"
+                        class="w-full p-3 rounded-md bg-brand-teal text-white font-bold text-lg
+                                   hover:bg-teal-600 transition-colors duration-200">
+                    Entrar
+                </button>
+            </form>
+
+            <div class="relative flex py-5 items-center">
+                <div class="flex-grow border-t border-gray-400"></div>
+                <span class="flex-shrink mx-4 text-gray-200">ou</span>
+                <div class="flex-grow border-t border-gray-400"></div>
+            </div>
+
+            <a href="/oauth2/authorization/google"
+               class="w-full flex items-center justify-center p-3 rounded-md bg-white text-gray-900 font-medium
+                       hover:bg-gray-200 transition-colors duration-200">
+                <svg class="w-5 h-5 mr-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+                    <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.02 13.97 17.6 9.5 24 9.5z"></path>
+                    <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.4-4.55H24v8.51h12.8c-.57 3.03-2.31 5.48-4.91 7.23l7.3 5.63C44.7 38.63 46.98 32.07 46.98 24.55z"></path>
+                    <path fill="#34A853" d="M10.53 28.59C9.99 26.98 9.68 25.28 9.68 23.5c0-1.78.31-3.48.85-5.09l-7.98-6.19C.92 14.42 0 18.82 0 23.5s.92 9.08 2.56 12.79l7.97-6.7z"></path>
+                        <path fill="#FBBC05" d="M24 48c6.47 0 11.94-2.13 15.89-5.81l-7.3-5.63c-2.11 1.41-4.79 2.2-7.59 2.2-6.4 0-11.98-4.47-13.97-10.48l-7.98 6.19C6.51 42.62 14.62 48 24 48z"></path>
+                        <path fill="none" d="M0 0h48v48H0z"></path>
+                </svg>
+                Continuar com o Google
+            </a>
+
+            <div class="mt-8 text-center text-sm">
+                <p class="text-gray-200">
+                    Não tem uma conta?
+                    <a th:href="@{/register}" class="font-medium text-white hover:underline">Cadastre-se</a>
+                </p>
+                <a th:href="@{/forgot-password}" class="block mt-3 font-medium text-white hover:underline">
+                    Esqueceu sua senha?
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
