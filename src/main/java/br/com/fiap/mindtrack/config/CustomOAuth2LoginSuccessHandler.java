@@ -1,6 +1,6 @@
 package br.com.fiap.mindtrack.config;
 
-import br.com.fiap.mindtrack.service.OAuth2LoginService;
+import br.com.fiap.mindtrack.auth.OAuth2LoginService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

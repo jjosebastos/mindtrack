@@ -1,7 +1,7 @@
 package br.com.fiap.mindtrack.config;
 
-import br.com.fiap.mindtrack.service.CustomerDetailsService;
-import br.com.fiap.mindtrack.service.OAuth2LoginService;
+import br.com.fiap.mindtrack.auth.CustomerDetailsService;
+import br.com.fiap.mindtrack.auth.OAuth2LoginService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -60,9 +60,10 @@ public class SecurityConfiguration {
                                 "/css/**","/js/**","/images/**","/webjars/**",
                                 "/h2-console/**","/svg/**",
                                 "/login", "/login/**",
+                                "/register/**",
                                 "/oauth2/**",
-                                "/login/oauth2/code/**",
-                                "/register","/health-check",
+                                "/login/oauth2/code/**"
+                                ,"/health-check",
                                 "/form","/error"
                         ).permitAll()
                         .anyRequest().authenticated()
@@ -78,7 +79,6 @@ public class SecurityConfiguration {
                 )
                 .oauth2Login(oauth2 -> oauth2
                         .loginPage("/login")
-                        // Mantivemos a conexão com o seu Handler customizado
                         .successHandler(oAuth2LoginSuccessHandler())
                 )
                 .logout(logout -> logout

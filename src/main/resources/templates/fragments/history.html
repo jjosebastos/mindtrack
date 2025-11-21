@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/base :: layout(~{::#history-content})}">
+<head>
+    <title>Histórico</title>
+</head>
+<body>
+
+<div id="history-content" class="flex flex-col h-full w-full">
+
+    <div class="bg-[#1096AD] rounded-3xl shadow-xl p-6 md:p-8 flex flex-col h-full min-h-[500px] relative overflow-hidden">
+
+        <div class="flex justify-between items-center mb-6">
+            <h2 class="text-2xl md:text-3xl font-bold text-white">Listagem de Humor:</h2>
+
+            <button class="btn btn-sm bg-white/20 border-none text-white hover:bg-white hover:text-[#1096AD]">
+                <i class="fa-solid fa-filter mr-2"></i> Filtrar
+            </button>
+        </div>
+
+        <div class="flex-1 overflow-y-auto space-y-4 pr-2 custom-scrollbar">
+
+            <div class="bg-white rounded-2xl p-4 shadow-sm flex flex-col md:flex-row items-start md:items-center gap-4 transition-transform hover:scale-[1.01] duration-200">
+
+                <div class="flex-shrink-0">
+                    <div class="w-14 h-14 bg-yellow-100 rounded-full flex items-center justify-center text-yellow-500 text-4xl">
+                        <i class="fa-solid fa-face-smile"></i>
+                    </div>
+                </div>
+
+                <div class="flex-1 min-w-0">
+                    <h3 class="text-xl font-bold text-gray-800">Feliz</h3>
+                    <p class="text-gray-500 text-sm italic truncate">"Hoje o dia foi muito produtivo no trabalho..."</p>
+                </div>
+
+                <div class="flex flex-row md:flex-col items-center md:items-end justify-between w-full md:w-auto gap-3 mt-2 md:mt-0">
+                    <span class="text-sm font-semibold text-gray-600 bg-gray-100 px-3 py-1 rounded-full">
+                        19/Nov/2025 | 12:30
+                    </span>
+
+                    <div class="flex gap-2">
+                        <button class="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-100 flex items-center justify-center transition-colors" title="Editar">
+                            <i class="fa-solid fa-pen text-sm"></i>
+                        </button>
+                        <button class="w-8 h-8 rounded-lg bg-red-50 text-red-600 hover:bg-red-100 flex items-center justify-center transition-colors" title="Excluir">
+                            <i class="fa-solid fa-trash text-sm"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-2xl p-4 shadow-sm flex flex-col md:flex-row items-start md:items-center gap-4 transition-transform hover:scale-[1.01] duration-200">
+                <div class="flex-shrink-0">
+                    <div class="w-14 h-14 bg-gray-100 rounded-full flex items-center justify-center text-gray-500 text-4xl">
+                        <i class="fa-solid fa-face-meh"></i>
+                    </div>
+                </div>
+                <div class="flex-1 min-w-0">
+                    <h3 class="text-xl font-bold text-gray-800">Neutro</h3>
+                    <p class="text-gray-500 text-sm italic truncate">"Dia normal, nada de especial aconteceu."</p>
+                </div>
+                <div class="flex flex-row md:flex-col items-center md:items-end justify-between w-full md:w-auto gap-3 mt-2 md:mt-0">
+                    <span class="text-sm font-semibold text-gray-600 bg-gray-100 px-3 py-1 rounded-full">
+                        18/Nov/2025 | 09:15
+                    </span>
+                    <div class="flex gap-2">
+                        <button class="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-100 flex items-center justify-center">
+                            <i class="fa-solid fa-pen text-sm"></i>
+                        </button>
+                        <button class="w-8 h-8 rounded-lg bg-red-50 text-red-600 hover:bg-red-100 flex items-center justify-center">
+                            <i class="fa-solid fa-trash text-sm"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-2xl p-4 shadow-sm flex flex-col md:flex-row items-start md:items-center gap-4 transition-transform hover:scale-[1.01] duration-200">
+                <div class="flex-shrink-0">
+                    <div class="w-14 h-14 bg-blue-100 rounded-full flex items-center justify-center text-blue-500 text-4xl">
+                        <i class="fa-solid fa-face-frown"></i>
+                    </div>
+                </div>
+                <div class="flex-1 min-w-0">
+                    <h3 class="text-xl font-bold text-gray-800">Triste</h3>
+                    <p class="text-gray-500 text-sm italic truncate">"Não recebi boas notícias hoje."</p>
+                </div>
+                <div class="flex flex-row md:flex-col items-center md:items-end justify-between w-full md:w-auto gap-3 mt-2 md:mt-0">
+                    <span class="text-sm font-semibold text-gray-600 bg-gray-100 px-3 py-1 rounded-full">
+                        17/Nov/2025 | 18:45
+                    </span>
+                    <div class="flex gap-2">
+                        <button class="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-100 flex items-center justify-center">
+                            <i class="fa-solid fa-pen text-sm"></i>
+                        </button>
+                        <button class="w-8 h-8 rounded-lg bg-red-50 text-red-600 hover:bg-red-100 flex items-center justify-center">
+                            <i class="fa-solid fa-trash text-sm"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-2xl p-4 shadow-sm flex flex-col md:flex-row items-start md:items-center gap-4 transition-transform hover:scale-[1.01] duration-200">
+                <div class="flex-shrink-0">
+                    <div class="w-14 h-14 bg-blue-100 rounded-full flex items-center justify-center text-blue-500 text-4xl">
+                        <i class="fa-solid fa-face-frown"></i>
+                    </div>
+                </div>
+                <div class="flex-1 min-w-0">
+                    <h3 class="text-xl font-bold text-gray-800">Triste</h3>
+                    <p class="text-gray-500 text-sm italic truncate">"Não recebi boas notícias hoje."</p>
+                </div>
+                <div class="flex flex-row md:flex-col items-center md:items-end justify-between w-full md:w-auto gap-3 mt-2 md:mt-0">
+                    <span class="text-sm font-semibold text-gray-600 bg-gray-100 px-3 py-1 rounded-full">
+                        17/Nov/2025 | 18:45
+                    </span>
+                    <div class="flex gap-2">
+                        <button class="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-100 flex items-center justify-center">
+                            <i class="fa-solid fa-pen text-sm"></i>
+                        </button>
+                        <button class="w-8 h-8 rounded-lg bg-red-50 text-red-600 hover:bg-red-100 flex items-center justify-center">
+                            <i class="fa-solid fa-trash text-sm"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="mt-6 pt-4 border-t border-white/20 flex justify-center items-center gap-2">
+            <button class="w-8 h-8 rounded bg-white/20 text-white hover:bg-white hover:text-[#1096AD] flex items-center justify-center transition-colors">
+                <i class="fa-solid fa-chevron-left text-xs"></i>
+            </button>
+
+            <button class="w-8 h-8 rounded bg-white text-[#1096AD] font-bold flex items-center justify-center shadow-md">1</button>
+            <button class="w-8 h-8 rounded bg-white/20 text-white hover:bg-white hover:text-[#1096AD] flex items-center justify-center transition-colors">2</button>
+            <button class="w-8 h-8 rounded bg-white/20 text-white hover:bg-white hover:text-[#1096AD] flex items-center justify-center transition-colors">3</button>
+
+            <span class="text-white/50 text-xs">...</span>
+
+            <button class="w-8 h-8 rounded bg-white/20 text-white hover:bg-white hover:text-[#1096AD] flex items-center justify-center transition-colors">10</button>
+
+            <button class="w-8 h-8 rounded bg-white/20 text-white hover:bg-white hover:text-[#1096AD] flex items-center justify-center transition-colors">
+                <i class="fa-solid fa-chevron-right text-xs"></i>
+            </button>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

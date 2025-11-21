@@ -3,91 +3,103 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Log In - MindTrack</title>
+    <title th:text="#{login.title} + ' - MindTrack'">Log In - MindTrack</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        // Configuração para recriar as cores da imagem
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        'brand-teal': '#2dbfA8', // Cor principal da esquerda e do botão
-                        'brand-blue-light': '#1d6fae', // Início do gradiente da direita
-                        'brand-blue-dark': '#0f3c7A', // Fim do gradiente da direita
+                        'brand-teal': '#2dbfA8',
+                        'brand-blue-light': '#1d6fae',
+                        'brand-blue-dark': '#0f3c7A',
                     },
                 },
             },
         };
     </script>
 </head>
-<body class="bg-gray-900">
+<body class="bg-gray-900 h-screen w-screen overflow-hidden">
 
-<div class="flex h-screen">
+<div class="flex h-full w-full">
 
-    <div class="w-3/5 bg-brand-teal flex-col items-center justify-center text-gray-900 p-12 text-center hidden md:flex">
-        <h1 class="text-5xl font-bold">MindTrackLogo</h1>
+    <div class="w-3/5 bg-brand-teal flex-col items-center justify-center text-gray-900 p-12 text-center hidden md:flex h-full">
+        <h1 class="text-5xl font-bold">MindTrack</h1>
         <p class="text-2xl mt-4">Lorem ipsum indolor</p>
     </div>
 
-    <div class="w-full md:w-2/5 bg-gradient-to-b from-brand-blue-light to-brand-blue-dark flex items-center justify-center p-8 md:p-12">
+    <div class="w-full md:w-2/5 bg-gradient-to-b from-brand-blue-light to-brand-blue-dark relative h-full">
 
-        <div class="w-full max-w-md">
-            <h2 class="text-4xl font-bold text-white mb-8 text-center">Log In</h2>
-            <form th:action="@{/login}" method="post">
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-md px-8">
 
-                <div th:if="${param.error}" class="mb-4 p-3 bg-red-500 text-white rounded-md text-sm">
-                    Nome de usuário ou senha inválidos.
+            <h2 class="text-4xl font-bold text-white mb-8 text-center" th:text="#{login.title}">Log In</h2>
+
+            <form th:action="@{/perform_login}" method="post">
+
+                <div th:if="${message}"
+                     class="auto-dismiss absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-full mt-[-10px] w-full max-w-sm
+                            p-3 bg-green-500 text-white rounded-md text-sm flex items-center shadow-lg z-50 transition-opacity duration-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                    </svg>
+                    <span th:text="${message}"></span>
+                </div>
+
+                <div th:if="${param.error}"
+                     class="auto-dismiss absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-full mt-[-10px] w-full max-w-sm
+                            p-3 bg-red-500 text-white rounded-md text-sm flex items-center shadow-lg z-50 transition-opacity duration-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                    </svg>
+                    <span th:text="#{login.error.bad_credentials}">Credenciais inválidas</span>
                 </div>
 
                 <div class="mb-5">
-                    <label for="username" class="block text-sm font-medium text-gray-200 mb-1">Username</label>
+                    <label for="username" class="block text-sm font-medium text-gray-200 mb-1" th:text="#{login.label.username}">Username</label>
                     <input type="text" id="username" name="username"
-                           class="w-full p-3 rounded-md bg-gray-200 text-gray-900 placeholder:text-gray-500
-                                      focus:outline-none focus:ring-2 focus:ring-brand-teal"
-                           placeholder="Digite seu nome de usuário...">
+                           class="w-full p-3 rounded-md bg-gray-200 text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-brand-teal transition-all"
+                           th:placeholder="#{login.placeholder.username}">
                 </div>
 
                 <div class="mb-6">
-                    <label for="password" class="block text-sm font-medium text-gray-200 mb-1">Senha</label>
+                    <label for="password" class="block text-sm font-medium text-gray-200 mb-1" th:text="#{login.label.password}">Senha</label>
                     <input type="password" id="password" name="password"
-                           class="w-full p-3 rounded-md bg-gray-200 text-gray-900 placeholder:text-gray-500
-                                      focus:outline-none focus:ring-2 focus:ring-brand-teal"
-                           placeholder="Digite sua senha...">
+                           class="w-full p-3 rounded-md bg-gray-200 text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-brand-teal transition-all"
+                           th:placeholder="#{login.placeholder.password}">
                 </div>
 
                 <button type="submit"
-                        class="w-full p-3 rounded-md bg-brand-teal text-white font-bold text-lg
-                                   hover:bg-teal-600 transition-colors duration-200">
+                        class="w-full p-3 rounded-md bg-brand-teal text-white font-bold text-lg hover:bg-teal-600 transition-colors duration-200 shadow-lg"
+                        th:text="#{login.button.submit}">
                     Entrar
                 </button>
             </form>
 
             <div class="relative flex py-5 items-center">
-                <div class="flex-grow border-t border-gray-400"></div>
-                <span class="flex-shrink mx-4 text-gray-200">ou</span>
-                <div class="flex-grow border-t border-gray-400"></div>
+                <div class="flex-grow border-t border-gray-400 opacity-50"></div>
+                <span class="flex-shrink mx-4 text-gray-200 opacity-80" th:text="#{login.separator.or}">ou</span>
+                <div class="flex-grow border-t border-gray-400 opacity-50"></div>
             </div>
 
             <a href="/oauth2/authorization/google"
-               class="w-full flex items-center justify-center p-3 rounded-md bg-white text-gray-900 font-medium
-                       hover:bg-gray-200 transition-colors duration-200">
+               class="w-full flex items-center justify-center p-3 rounded-md bg-white text-gray-900 font-medium hover:bg-gray-100 transition-colors duration-200 shadow-md">
                 <svg class="w-5 h-5 mr-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
                     <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.02 13.97 17.6 9.5 24 9.5z"></path>
                     <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.4-4.55H24v8.51h12.8c-.57 3.03-2.31 5.48-4.91 7.23l7.3 5.63C44.7 38.63 46.98 32.07 46.98 24.55z"></path>
                     <path fill="#34A853" d="M10.53 28.59C9.99 26.98 9.68 25.28 9.68 23.5c0-1.78.31-3.48.85-5.09l-7.98-6.19C.92 14.42 0 18.82 0 23.5s.92 9.08 2.56 12.79l7.97-6.7z"></path>
-                        <path fill="#FBBC05" d="M24 48c6.47 0 11.94-2.13 15.89-5.81l-7.3-5.63c-2.11 1.41-4.79 2.2-7.59 2.2-6.4 0-11.98-4.47-13.97-10.48l-7.98 6.19C6.51 42.62 14.62 48 24 48z"></path>
-                        <path fill="none" d="M0 0h48v48H0z"></path>
+                    <path fill="#FBBC05" d="M24 48c6.47 0 11.94-2.13 15.89-5.81l-7.3-5.63c-2.11 1.41-4.79 2.2-7.59 2.2-6.4 0-11.98-4.47-13.97-10.48l-7.98 6.19C6.51 42.62 14.62 48 24 48z"></path>
+                    <path fill="none" d="M0 0h48v48H0z"></path>
                 </svg>
-                Continuar com o Google
+                <span th:text="#{login.button.google}">Continuar com o Google</span>
             </a>
 
             <div class="mt-8 text-center text-sm">
                 <p class="text-gray-200">
-                    Não tem uma conta?
-                    <a th:href="@{/register}" class="font-medium text-white hover:underline">Cadastre-se</a>
+                    <span th:text="#{login.text.no_account}">Não tem uma conta?</span>
+                    <a th:href="@{/register}" class="font-medium text-white hover:text-brand-teal hover:underline transition-colors" th:text="#{login.link.register}">Cadastre-se</a>
                 </p>
-                <a th:href="@{/forgot-password}" class="block mt-3 font-medium text-white hover:underline">
+                <a th:href="@{/forgot-password}" class="block mt-3 font-medium text-gray-300 hover:text-white hover:underline transition-colors" th:text="#{login.link.forgot_password}">
                     Esqueceu sua senha?
                 </a>
             </div>
@@ -95,6 +107,21 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+       const alerts = document.querySelectorAll('.auto-dismiss');
+
+       alerts.forEach(function(alert) {
+           setTimeout(() => {
+               alert.style.opacity = '0';
+               setTimeout(() => {
+                   alert.style.display = 'none';
+               }, 500);
+           }, 5000);
+       });
+   });
+</script>
 
 </body>
 </html>

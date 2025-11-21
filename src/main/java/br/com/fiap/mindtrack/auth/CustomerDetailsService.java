@@ -1,4 +1,4 @@
-package br.com.fiap.mindtrack.service;
+package br.com.fiap.mindtrack.auth;
 
 import br.com.fiap.mindtrack.user.User;
 import br.com.fiap.mindtrack.user.UserRepository;
