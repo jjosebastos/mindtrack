@@ -7,63 +7,81 @@
 
     <div class="w-full max-w-2xl bg-white rounded-3xl shadow-lg border border-gray-100 p-8 md:p-10 mt-6">
 
-        <h2 class="text-2xl font-bold text-gray-800 text-center mb-8">Como você está se sentindo?</h2>
+        <h2 class="text-2xl font-bold text-gray-800 text-center mb-8" th:text="#{mood.title}">Como você está se sentindo?</h2>
 
-        <form th:action="@{/mood}" method="post" class="space-y-8">
+        <form th:action="@{/mood}" th:object="${humorDto}" method="post" class="space-y-8">
+
+            <div th:if="${#fields.hasAnyErrors()}" class="p-4 bg-red-100 text-red-700 rounded-xl">
+                <ul>
+                    <li th:each="err : ${#fields.allErrors()}" th:text="${err}"></li>
+                </ul>
+            </div>
 
             <div class="flex flex-wrap justify-center gap-6">
+
                 <label class="cursor-pointer group relative">
-                    <input type="radio" name="mood" value="HAPPY" class="peer sr-only" required />
+                    <input type="radio" th:field="*{humorType}" value="FELIZ" class="peer sr-only" />
                     <div class="w-16 h-16 bg-gray-50 border-2 border-gray-200 rounded-2xl flex items-center justify-center text-gray-400 text-3xl
                                 transition-all duration-200 peer-checked:bg-brand-teal peer-checked:text-white peer-checked:border-brand-teal peer-checked:scale-110 peer-checked:shadow-lg">
                         <i class="fa-regular fa-face-smile"></i>
                     </div>
-                    <span class="text-xs text-gray-400 mt-2 block text-center font-bold uppercase tracking-wide group-hover:text-brand-teal">Feliz</span>
+                    <span class="text-xs text-gray-400 mt-2 block text-center font-bold uppercase tracking-wide group-hover:text-brand-teal"
+                          th:text="#{mood.label.happy}">Feliz</span>
                 </label>
 
                 <label class="cursor-pointer group relative">
-                    <input type="radio" name="mood" value="NEUTRAL" class="peer sr-only" />
+                    <input type="radio" th:field="*{humorType}" value="NEUTRO" class="peer sr-only" />
                     <div class="w-16 h-16 bg-gray-50 border-2 border-gray-200 rounded-2xl flex items-center justify-center text-gray-400 text-3xl
                                 transition-all duration-200 peer-checked:bg-brand-teal peer-checked:text-white peer-checked:border-brand-teal peer-checked:scale-110 peer-checked:shadow-lg">
                         <i class="fa-regular fa-face-meh"></i>
                     </div>
-                    <span class="text-xs text-gray-400 mt-2 block text-center font-bold uppercase tracking-wide group-hover:text-brand-teal">Neutro</span>
+                    <span class="text-xs text-gray-400 mt-2 block text-center font-bold uppercase tracking-wide group-hover:text-brand-teal"
+                          th:text="#{mood.label.neutral}">Neutro</span>
                 </label>
 
                 <label class="cursor-pointer group relative">
-                    <input type="radio" name="mood" value="SAD" class="peer sr-only" />
+                    <input type="radio" th:field="*{humorType}" value="TRISTE" class="peer sr-only" />
                     <div class="w-16 h-16 bg-gray-50 border-2 border-gray-200 rounded-2xl flex items-center justify-center text-gray-400 text-3xl
                                 transition-all duration-200 peer-checked:bg-brand-teal peer-checked:text-white peer-checked:border-brand-teal peer-checked:scale-110 peer-checked:shadow-lg">
                         <i class="fa-regular fa-face-frown"></i>
                     </div>
-                    <span class="text-xs text-gray-400 mt-2 block text-center font-bold uppercase tracking-wide group-hover:text-brand-teal">Triste</span>
+                    <span class="text-xs text-gray-400 mt-2 block text-center font-bold uppercase tracking-wide group-hover:text-brand-teal"
+                          th:text="#{mood.label.sad}">Triste</span>
                 </label>
 
                 <label class="cursor-pointer group relative">
-                    <input type="radio" name="mood" value="ANGRY" class="peer sr-only" />
+                    <input type="radio" th:field="*{humorType}" value="RAIVA" class="peer sr-only" />
                     <div class="w-16 h-16 bg-gray-50 border-2 border-gray-200 rounded-2xl flex items-center justify-center text-gray-400 text-3xl
                                 transition-all duration-200 peer-checked:bg-brand-teal peer-checked:text-white peer-checked:border-brand-teal peer-checked:scale-110 peer-checked:shadow-lg">
                         <i class="fa-regular fa-face-angry"></i>
                     </div>
-                    <span class="text-xs text-gray-400 mt-2 block text-center font-bold uppercase tracking-wide group-hover:text-brand-teal">Raiva</span>
+                    <span class="text-xs text-gray-400 mt-2 block text-center font-bold uppercase tracking-wide group-hover:text-brand-teal"
+                          th:text="#{mood.label.angry}">Raiva</span>
                 </label>
             </div>
 
             <div class="form-control">
                 <label class="label">
-                    <span class="label-text text-gray-700 font-bold ml-1">Comentário Adicional</span>
+                    <span class="label-text text-gray-700 font-bold ml-1" th:text="#{mood.label.comment}">Comentário Adicional</span>
                 </label>
-                <textarea name="description" class="textarea textarea-bordered h-24 bg-gray-50 border-gray-300 text-gray-800 focus:border-brand-teal focus:ring-1 focus:ring-brand-teal" placeholder="Hoje eu senti que..."></textarea>
+                <textarea th:field="*{comentario}"
+                          class="textarea textarea-bordered h-24 bg-gray-50 border-gray-300 text-gray-800 focus:border-brand-teal focus:ring-1 focus:ring-brand-teal"
+                          th:placeholder="#{mood.placeholder.comment}"></textarea>
+                <p th:if="${#fields.hasErrors('comentario')}" th:errors="*{comentario}" class="text-red-500 text-xs mt-1"></p>
             </div>
 
-            <button type="submit" class="btn bg-brand-teal hover:bg-teal-700 border-none text-white w-full text-lg shadow-md">
-                Salvar Registro
-            </button>
+            <form th:action="@{/mood}" th:object="${humorDto}" method="post" class="space-y-8">
+                <input type="hidden" th:field="*{idHumor}" />
+                <button type="submit" class="btn bg-brand-teal hover:bg-teal-700 border-none text-white w-full text-lg shadow-md"
+                        th:text="#{mood.button.save}">
+                    Salvar Registro
+                </button>
+            </form>
 
         </form>
 
         <div class="mt-8 pt-6 border-t border-gray-100 text-center">
-            <p class="text-gray-400 italic font-serif text-sm">
+            <p class="text-gray-400 italic font-serif text-sm" th:text="#{mood.quote}">
                 "A única maneira de fazer um ótimo trabalho é amar o que você faz."
             </p>
         </div>

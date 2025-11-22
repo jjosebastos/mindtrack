@@ -9,6 +9,7 @@ import lombok.Data;
 @Data
 public class HumorDto {
 
+    private Long idHumor;
     @Enumerated(EnumType.STRING)
     @NotNull(message = "humor.type.notblank")
     private HumorType humorType;
