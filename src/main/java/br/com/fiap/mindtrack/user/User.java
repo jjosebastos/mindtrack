@@ -40,4 +40,6 @@ public class User {
     public UserRole userRole;
     @Column(name = "au_provider")
     public String authProvider;
+    @Column(name = "vl_lang")
+    public String lang;
 }

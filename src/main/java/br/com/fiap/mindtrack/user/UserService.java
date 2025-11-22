@@ -1,13 +1,17 @@
 package br.com.fiap.mindtrack.user;
 
 import br.com.fiap.mindtrack.exception.UserAlreadyExistsException;
+import br.com.fiap.mindtrack.exception.UserNotFoundException;
+import br.com.fiap.mindtrack.form.settings.SettingsDto;
 import br.com.fiap.mindtrack.telefone.Telefone;
 import br.com.fiap.mindtrack.telefone.TelefoneRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -35,6 +39,34 @@ public class UserService {
         telefoneRepository.save(telefone);
     }
 
+    public Optional<User> findByEmail(String email){
+        return userRepository.findByEmail(email);
+    }
+
+    @Transactional
+    public void updateUser(Long userId, SettingsDto dto) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+
+        if (StringUtils.hasText(dto.getNome())) {
+            user.setFirstName(dto.getNome());
+        }
+        if (StringUtils.hasText(dto.getSobrenome())) {
+            user.setLastName(dto.getSobrenome());
+        }
+        if (StringUtils.hasText(dto.getLang())) {
+            user.setLang(dto.getLang());
+        }
+        if (StringUtils.hasText(dto.getNewEmail())) {
+            user.setEmail(dto.getNewEmail());
+            user.setUsername(dto.getNewEmail());
+        }
+
+        if (StringUtils.hasText(dto.getNewPassword())) {
+            user.setPassword(passwordEncoder.encode(dto.getNewPassword()));
+        }
+        userRepository.save(user);
+    }
     private User userMapper(RegisterDto dto){
         return User.builder()
                 .firstName(dto.getNome())
