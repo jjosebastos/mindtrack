@@ -58,7 +58,7 @@ PostgreSQL e migrações via Flyway.
 A aplicação está hospedada na plataforma **Render**, com build
 automatizado e ambiente configurado para produção.
 
-[Link](https://mindtrack-55mc.onrender.com)
+[Link do deploy](https://mindtrack-55mc.onrender.com)
 
 ------------------------------------------------------------------------
 
