@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/base :: layout(~{::#dashboard-content})}">
+<body>
+
+<div id="dashboard-content" class="flex flex-col w-full min-h-full p-4 md:p-8">
+
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+    <div class="w-full max-w-7xl mx-auto flex flex-col gap-6">
+
+        <div class="flex flex-col md:flex-row justify-between items-end md:items-center gap-4">
+            <div>
+                <h1 class="text-3xl font-bold text-gray-800" th:text="#{dashboard.title}">Dashboard</h1>
+                <p class="text-gray-500" th:text="#{dashboard.subtitle}">Visão geral...</p>
+            </div>
+            <div class="flex items-center gap-2 text-sm font-medium text-gray-500 bg-white px-4 py-2 rounded-xl shadow-sm border border-gray-100">
+                <i class="fa-regular fa-calendar"></i>
+                <span th:text="#{dashboard.filter.last90}">Últimos 90 dias</span>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+            <div class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100 flex items-center gap-4 transition-transform hover:scale-105">
+                <div class="w-12 h-12 rounded-full bg-green-100 text-green-600 flex items-center justify-center text-xl">
+                    <i class="fa-solid fa-face-smile"></i>
+                </div>
+                <div>
+                    <p class="text-gray-400 text-xs uppercase font-bold tracking-wider" th:text="#{dashboard.card.happy}">Dias Felizes</p>
+                    <h3 class="text-2xl font-bold text-gray-800"
+                        th:text="${dashboardData.daysHappy != null ? dashboardData.daysHappy : 0}">0</h3>
+                </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100 flex items-center gap-4 transition-transform hover:scale-105">
+                <div class="w-12 h-12 rounded-full bg-brand-teal/10 text-brand-teal flex items-center justify-center text-xl">
+                    <i class="fa-solid fa-calendar-check"></i>
+                </div>
+                <div>
+                    <p class="text-gray-400 text-xs uppercase font-bold tracking-wider" th:text="#{dashboard.card.total}">Total Registros</p>
+                    <h3 class="text-2xl font-bold text-gray-800"
+                        th:text="${dashboardData.totalLogs != null ? dashboardData.totalLogs : 0}">0</h3>
+                </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100 flex items-center gap-4 transition-transform hover:scale-105">
+                <div class="w-12 h-12 rounded-full bg-orange-100 text-orange-500 flex items-center justify-center text-xl">
+                    <i class="fa-solid fa-fire"></i>
+                </div>
+                <div>
+                    <p class="text-gray-400 text-xs uppercase font-bold tracking-wider" th:text="#{dashboard.card.streak}">Sequência</p>
+                    <h3 class="text-2xl font-bold text-gray-800">
+                        <span th:text="${dashboardData.currentStreak != null ? dashboardData.currentStreak : 0}">0</span>
+                        <span class="text-lg font-normal text-gray-500" th:text="#{dashboard.card.days}">Dias</span>
+                    </h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 pb-10">
+
+            <div class="bg-white p-6 rounded-3xl shadow-lg border border-gray-100">
+                <div class="mb-6">
+                    <h3 class="text-lg font-bold text-gray-800" th:text="#{dashboard.chart.monthly.title}">Evolução Mensal</h3>
+                    <p class="text-sm text-gray-400" th:text="#{dashboard.chart.monthly.subtitle}">Variação...</p>
+                </div>
+                <div id="chart-monthly"></div>
+            </div>
+
+            <div class="bg-white p-6 rounded-3xl shadow-lg border border-gray-100">
+                <div class="mb-6">
+                    <h3 class="text-lg font-bold text-gray-800" th:text="#{dashboard.chart.quarterly.title}">Resumo Trimestral</h3>
+                    <p class="text-sm text-gray-400" th:text="#{dashboard.chart.quarterly.subtitle}">Quantidade...</p>
+                </div>
+                <div id="chart-quarterly"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <script th:inline="javascript">
+        document.addEventListener("DOMContentLoaded", function () {
+
+            if (typeof ApexCharts === 'undefined') return;
+
+            // 1. IMPORTAR VARIÁVEIS DO JAVA
+            var evolutionData = [[${dashboardData.evolutionValues}]];
+            var evolutionLabels = [[${dashboardData.evolutionLabels}]];
+            var quarterlyData = [[${dashboardData.quarterlyCounts}]];
+
+            // 2. IMPORTAR TRADUÇÕES DO PROPERTIES
+            var textHappy = [[#{mood.happy}]];
+            var textNeutral = [[#{mood.neutral}]];
+            var textSad = [[#{mood.sad}]];
+            var textAngry = [[#{mood.angry}]];
+
+            // Proteção contra nulos
+            if (!evolutionData) evolutionData = [];
+            if (!evolutionLabels) evolutionLabels = [];
+            if (!quarterlyData) quarterlyData = [0, 0, 0, 0];
+
+            // --- GRÁFICO 1: MENSAL ---
+            var optionsMonthly = {
+                series: [{ name: 'Humor', data: evolutionData }],
+                chart: {
+                    height: 350,
+                    type: 'area',
+                    toolbar: { show: false },
+                    fontFamily: 'inherit'
+                },
+                colors: ['#2dbfA8'],
+                fill: {
+                    type: "gradient",
+                    gradient: { shadeIntensity: 1, opacityFrom: 0.7, opacityTo: 0.2, stops: [0, 90, 100] }
+                },
+                dataLabels: { enabled: false },
+                stroke: { curve: 'smooth', width: 3 },
+                xaxis: {
+                    categories: evolutionLabels,
+                    labels: { style: { colors: '#9ca3af' } },
+                    axisBorder: { show: false },
+                    axisTicks: { show: false }
+                },
+                yaxis: {
+                    tickAmount: 3,
+                    min: 1, max: 4,
+                    labels: {
+                        style: { colors: '#6b7280', fontWeight: 600 },
+                        formatter: function (val) {
+                            // USA AS VARIÁVEIS TRADUZIDAS AQUI
+                            var v = Math.round(val);
+                            if(v === 1) return textAngry;
+                            if(v === 2) return textSad;
+                            if(v === 3) return textNeutral;
+                            if(v === 4) return textHappy;
+                            return "";
+                        }
+                    }
+                },
+                grid: { borderColor: '#f3f4f6' }
+            };
+
+            var chart1 = new ApexCharts(document.querySelector("#chart-monthly"), optionsMonthly);
+            chart1.render();
+
+            // --- GRÁFICO 2: TRIMESTRAL ---
+            var optionsQuarterly = {
+                series: [{ name: 'Registros', data: quarterlyData }],
+                chart: {
+                    height: 350,
+                    type: 'bar',
+                    toolbar: { show: false },
+                    fontFamily: 'inherit'
+                },
+                plotOptions: {
+                    bar: { borderRadius: 6, columnWidth: '50%', distributed: true }
+                },
+                colors: ['#2dbfA8', '#94a3b8', '#60a5fa', '#f87171'],
+                dataLabels: { enabled: false },
+                legend: { show: false },
+                xaxis: {
+                    // USA AS VARIÁVEIS TRADUZIDAS AQUI TAMBÉM
+                    categories: [textHappy, textNeutral, textSad, textAngry],
+                    labels: { style: { fontSize: '14px', fontWeight: 600, colors: '#64748b' } },
+                    axisBorder: { show: false },
+                    axisTicks: { show: false }
+                },
+                grid: { borderColor: '#f3f4f6' }
+            };
+
+            var chart2 = new ApexCharts(document.querySelector("#chart-quarterly"), optionsQuarterly);
+            chart2.render();
+        });
+    </script>
+</div>
+
+</body>
+</html>

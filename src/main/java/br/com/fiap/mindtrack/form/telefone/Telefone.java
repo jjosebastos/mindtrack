@@ -1,4 +1,4 @@
-package br.com.fiap.mindtrack.telefone;
+package br.com.fiap.mindtrack.form.telefone;
 
 import br.com.fiap.mindtrack.user.User;
 import jakarta.persistence.*;

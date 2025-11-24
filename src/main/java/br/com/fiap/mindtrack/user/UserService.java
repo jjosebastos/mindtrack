@@ -1,10 +1,9 @@
 package br.com.fiap.mindtrack.user;
 
 import br.com.fiap.mindtrack.exception.UserAlreadyExistsException;
-import br.com.fiap.mindtrack.exception.UserNotFoundException;
 import br.com.fiap.mindtrack.form.settings.SettingsDto;
-import br.com.fiap.mindtrack.telefone.Telefone;
-import br.com.fiap.mindtrack.telefone.TelefoneRepository;
+import br.com.fiap.mindtrack.form.telefone.Telefone;
+import br.com.fiap.mindtrack.form.telefone.TelefoneRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

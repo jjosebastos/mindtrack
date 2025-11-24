@@ -2,7 +2,7 @@
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org"
       th:replace="~{layout/base :: layout(~{::#home-content})}">
 <head>
-    <title>Início</title>
+    <title th:text="#{home.page.title}">Início</title>
 </head>
 <body>
 
@@ -10,7 +10,7 @@
 
     <div th:if="${message}" id="success-alert" class="alert alert-success shadow-lg max-w-xl mx-auto rounded-xl fixed top-4 left-1/2 transform -translate-x-1/2 z-50 text-white">
         <i class="fa-solid fa-circle-check"></i>
-        <span th:text="${message}">Bem-vindo!</span>
+        <span th:text="${message}"></span>
     </div>
 
     <div class="relative bg-gradient-to-r from-brand-teal to-teal-600 rounded-3xl p-8 md:p-10 shadow-xl text-white overflow-hidden shrink-0">
@@ -19,17 +19,20 @@
             <div class="md:col-span-2 space-y-4">
                 <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/20 border border-white/30 text-white text-xs font-bold uppercase">
                     <span class="w-2 h-2 rounded-full bg-white animate-pulse"></span>
-                    Sistema Online
+                    <span th:text="#{home.badge.online}">Sistema Online</span>
                 </div>
+
                 <h1 class="text-4xl md:text-5xl font-bold leading-tight">
-                    Olá, <span th:text="${#authentication.name}">Visitante</span>!
+                    <span th:text="#{home.greeting.hello}">Olá,</span>
+                    <span th:text="${loggedUser.firstName}">Visitante</span>!
                 </h1>
-                <p class="text-teal-50 text-lg max-w-xl">
+
+                <p class="text-teal-50 text-lg max-w-xl" th:text="#{home.hero.description}">
                     Sua central de monitoramento emocional. Registre, acompanhe e evolua com clareza.
                 </p>
                 <div class="pt-4 flex gap-4">
                     <a th:href="@{/mood}" class="btn bg-white text-brand-teal hover:bg-gray-100 border-none px-8 py-3 rounded-xl text-lg font-bold shadow-md">
-                        <i class="fa-regular fa-face-smile mr-2"></i> Registrar Humor
+                        <i class="fa-regular fa-face-smile mr-2"></i> <span th:text="#{home.btn.register_mood}">Registrar Humor</span>
                     </a>
                 </div>
             </div>
@@ -40,32 +43,33 @@
     </div>
 
     <div class="flex items-center gap-3 border-l-4 border-brand-teal pl-4 mt-4 shrink-0">
-        <h2 class="text-2xl font-bold text-gray-800">Visão Geral</h2>
+        <h2 class="text-2xl font-bold text-gray-800" th:text="#{home.section.overview}">Visão Geral</h2>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 shrink-0 pb-6">
+
         <div class="bg-white border border-gray-200 p-6 rounded-2xl shadow-sm hover:shadow-md hover:border-brand-teal transition-all group">
             <div class="w-12 h-12 bg-teal-50 rounded-xl flex items-center justify-center mb-4 group-hover:bg-brand-teal group-hover:text-white transition-colors text-brand-teal">
                 <i class="fa-solid fa-chart-line text-xl"></i>
             </div>
-            <h3 class="text-xl font-bold text-gray-800 mb-2">Monitoramento</h3>
-            <p class="text-gray-500 text-sm leading-relaxed">Acompanhe a variação do seu humor ao longo da semana com gráficos detalhados.</p>
+            <h3 class="text-xl font-bold text-gray-800 mb-2" th:text="#{home.card.monitoring.title}">Monitoramento</h3>
+            <p class="text-gray-500 text-sm leading-relaxed" th:text="#{home.card.monitoring.desc}">Acompanhe a variação do seu humor ao longo da semana com gráficos detalhados.</p>
         </div>
 
         <div class="bg-white border border-gray-200 p-6 rounded-2xl shadow-sm hover:shadow-md hover:border-brand-teal transition-all group">
             <div class="w-12 h-12 bg-teal-50 rounded-xl flex items-center justify-center mb-4 group-hover:bg-brand-teal group-hover:text-white transition-colors text-brand-teal">
                 <i class="fa-solid fa-shield-halved text-xl"></i>
             </div>
-            <h3 class="text-xl font-bold text-gray-800 mb-2">Segurança</h3>
-            <p class="text-gray-500 text-sm leading-relaxed">Seus dados são criptografados e acessíveis apenas por você.</p>
+            <h3 class="text-xl font-bold text-gray-800 mb-2" th:text="#{home.card.security.title}">Segurança</h3>
+            <p class="text-gray-500 text-sm leading-relaxed" th:text="#{home.card.security.desc}">Seus dados são criptografados e acessíveis apenas por você.</p>
         </div>
 
         <div class="bg-white border border-gray-200 p-6 rounded-2xl shadow-sm hover:shadow-md hover:border-brand-teal transition-all group">
             <div class="w-12 h-12 bg-teal-50 rounded-xl flex items-center justify-center mb-4 group-hover:bg-brand-teal group-hover:text-white transition-colors text-brand-teal">
                 <i class="fa-solid fa-lightbulb text-xl"></i>
             </div>
-            <h3 class="text-xl font-bold text-gray-800 mb-2">Insights</h3>
-            <p class="text-gray-500 text-sm leading-relaxed">Identifique padrões comportamentais e melhore sua qualidade de vida.</p>
+            <h3 class="text-xl font-bold text-gray-800 mb-2" th:text="#{home.card.insights.title}">Insights</h3>
+            <p class="text-gray-500 text-sm leading-relaxed" th:text="#{home.card.insights.desc}">Identifique padrões comportamentais e melhore sua qualidade de vida.</p>
         </div>
     </div>
 

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title th:text="#{login.title} + ' - MindTrack'">Log In - MindTrack</title>
+    <title>MindTrack - Login</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -12,116 +12,118 @@
                 extend: {
                     colors: {
                         'brand-teal': '#2dbfA8',
-                        'brand-blue-light': '#1d6fae',
-                        'brand-blue-dark': '#0f3c7A',
+                        'brand-dark': '#0f172a',
+                        'brand-card': '#1e293b',
+                        'brand-input': '#0f172a',
                     },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
                 },
             },
         };
     </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .tech-bg {
+            background-color: #0f1115;
+            background-image:
+                radial-gradient(circle at 50% 0%, #1d6fae20 0%, transparent 50%),
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 100% 100%, 40px 40px, 40px 40px;
+        }
+        .card-glow {
+            box-shadow: 0 -1px 0 rgba(255,255,255,0.1) inset, 0 20px 40px rgba(0,0,0,0.4);
+        }
+    </style>
 </head>
-<body class="bg-gray-900 h-screen w-screen overflow-hidden">
+<body class="tech-bg h-screen w-screen flex items-center justify-center overflow-hidden relative">
 
-<div class="flex h-full w-full">
-
-    <div class="w-3/5 bg-brand-teal flex-col items-center justify-center text-gray-900 p-12 text-center hidden md:flex h-full">
-        <h1 class="text-5xl font-bold">MindTrack</h1>
-        <p class="text-2xl mt-4">Lorem ipsum indolor</p>
-    </div>
-
-    <div class="w-full md:w-2/5 bg-gradient-to-b from-brand-blue-light to-brand-blue-dark relative h-full">
-
-        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-md px-8">
-
-            <h2 class="text-4xl font-bold text-white mb-8 text-center" th:text="#{login.title}">Log In</h2>
-
-            <form th:action="@{/perform_login}" method="post">
-
-                <div th:if="${message}"
-                     class="auto-dismiss absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-full mt-[-10px] w-full max-w-sm
-                            p-3 bg-green-500 text-white rounded-md text-sm flex items-center shadow-lg z-50 transition-opacity duration-500">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-                    </svg>
-                    <span th:text="${message}"></span>
-                </div>
-
-                <div th:if="${param.error}"
-                     class="auto-dismiss absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-full mt-[-10px] w-full max-w-sm
-                            p-3 bg-red-500 text-white rounded-md text-sm flex items-center shadow-lg z-50 transition-opacity duration-500">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
-                    </svg>
-                    <span th:text="#{login.error.bad_credentials}">Credenciais inválidas</span>
-                </div>
-
-                <div class="mb-5">
-                    <label for="username" class="block text-sm font-medium text-gray-200 mb-1" th:text="#{login.label.username}">Username</label>
-                    <input type="text" id="username" name="username"
-                           class="w-full p-3 rounded-md bg-gray-200 text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-brand-teal transition-all"
-                           th:placeholder="#{login.placeholder.username}">
-                </div>
-
-                <div class="mb-6">
-                    <label for="password" class="block text-sm font-medium text-gray-200 mb-1" th:text="#{login.label.password}">Senha</label>
-                    <input type="password" id="password" name="password"
-                           class="w-full p-3 rounded-md bg-gray-200 text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-brand-teal transition-all"
-                           th:placeholder="#{login.placeholder.password}">
-                </div>
-
-                <button type="submit"
-                        class="w-full p-3 rounded-md bg-brand-teal text-white font-bold text-lg hover:bg-teal-600 transition-colors duration-200 shadow-lg"
-                        th:text="#{login.button.submit}">
-                    Entrar
-                </button>
-            </form>
-
-            <div class="relative flex py-5 items-center">
-                <div class="flex-grow border-t border-gray-400 opacity-50"></div>
-                <span class="flex-shrink mx-4 text-gray-200 opacity-80" th:text="#{login.separator.or}">ou</span>
-                <div class="flex-grow border-t border-gray-400 opacity-50"></div>
-            </div>
-
-            <a href="/oauth2/authorization/google"
-               class="w-full flex items-center justify-center p-3 rounded-md bg-white text-gray-900 font-medium hover:bg-gray-100 transition-colors duration-200 shadow-md">
-                <svg class="w-5 h-5 mr-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
-                    <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.02 13.97 17.6 9.5 24 9.5z"></path>
-                    <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.4-4.55H24v8.51h12.8c-.57 3.03-2.31 5.48-4.91 7.23l7.3 5.63C44.7 38.63 46.98 32.07 46.98 24.55z"></path>
-                    <path fill="#34A853" d="M10.53 28.59C9.99 26.98 9.68 25.28 9.68 23.5c0-1.78.31-3.48.85-5.09l-7.98-6.19C.92 14.42 0 18.82 0 23.5s.92 9.08 2.56 12.79l7.97-6.7z"></path>
-                    <path fill="#FBBC05" d="M24 48c6.47 0 11.94-2.13 15.89-5.81l-7.3-5.63c-2.11 1.41-4.79 2.2-7.59 2.2-6.4 0-11.98-4.47-13.97-10.48l-7.98 6.19C6.51 42.62 14.62 48 24 48z"></path>
-                    <path fill="none" d="M0 0h48v48H0z"></path>
-                </svg>
-                <span th:text="#{login.button.google}">Continuar com o Google</span>
-            </a>
-
-            <div class="mt-8 text-center text-sm">
-                <p class="text-gray-200">
-                    <span th:text="#{login.text.no_account}">Não tem uma conta?</span>
-                    <a th:href="@{/register}" class="font-medium text-white hover:text-brand-teal hover:underline transition-colors" th:text="#{login.link.register}">Cadastre-se</a>
-                </p>
-                <a th:href="@{/forgot-password}" class="block mt-3 font-medium text-gray-300 hover:text-white hover:underline transition-colors" th:text="#{login.link.forgot_password}">
-                    Esqueceu sua senha?
-                </a>
-            </div>
-
-        </div>
-    </div>
+<div class="absolute top-6 right-8 z-50 flex gap-3 text-sm font-medium">
+    <a href="?lang=pt_BR" class="text-gray-400 hover:text-brand-teal transition-colors">PT</a>
+    <span class="text-gray-600">|</span>
+    <a href="?lang=en_US" class="text-gray-400 hover:text-brand-teal transition-colors">EN</a>
 </div>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-       const alerts = document.querySelectorAll('.auto-dismiss');
+<div class="absolute top-1/4 left-1/4 w-64 h-64 bg-brand-teal opacity-10 blur-[100px] rounded-full pointer-events-none"></div>
+<div class="absolute bottom-1/4 right-1/4 w-64 h-64 bg-blue-600 opacity-10 blur-[100px] rounded-full pointer-events-none"></div>
 
-       alerts.forEach(function(alert) {
-           setTimeout(() => {
-               alert.style.opacity = '0';
-               setTimeout(() => {
-                   alert.style.display = 'none';
-               }, 500);
-           }, 5000);
-       });
-   });
-</script>
+<div class="w-full max-w-[420px] bg-brand-card/90 backdrop-blur-sm p-8 rounded-2xl border border-gray-700/50 card-glow relative z-10 m-4">
+
+    <h2 class="text-2xl font-bold text-white text-center mb-2" th:text="#{login.welcome}">Bem-vindo</h2>
+
+    <div th:if="${param.error}" class="mb-4 p-3 bg-red-500/10 border border-red-500/20 text-red-200 rounded-lg text-sm flex items-center">
+        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        <span th:text="#{login.error}">Erro</span>
+    </div>
+    <div th:if="${message}" class="mb-4 p-3 bg-green-500/10 border border-green-500/20 text-green-200 rounded-lg text-sm flex items-center">
+        <span th:text="${message}"></span>
+    </div>
+
+    <form th:action="@{/perform_login}" method="post" class="space-y-4">
+
+        <div class="group">
+            <label for="username" class="block text-xs font-medium text-gray-400 mb-1 ml-1 uppercase tracking-wider" th:text="#{login.email}">Email</label>
+            <div class="relative">
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                    </span>
+                <input type="text" id="username" name="username"
+                       class="w-full py-3 pl-10 pr-4 bg-brand-input border border-gray-700 rounded-xl text-white placeholder-gray-600 focus:outline-none focus:border-brand-teal focus:ring-1 focus:ring-brand-teal transition-all"
+                       placeholder="name@mindtrack.com">
+            </div>
+        </div>
+
+        <div class="group">
+            <label for="password" class="block text-xs font-medium text-gray-400 mb-1 ml-1 uppercase tracking-wider" th:text="#{login.password}">Senha</label>
+            <div class="relative">
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                    </span>
+                <input type="password" id="password" name="password"
+                       class="w-full py-3 pl-10 pr-4 bg-brand-input border border-gray-700 rounded-xl text-white placeholder-gray-600 focus:outline-none focus:border-brand-teal focus:ring-1 focus:ring-brand-teal transition-all"
+                       placeholder="••••••••">
+            </div>
+        </div>
+
+
+        <button type="submit"
+                class="w-full py-3.5 rounded-xl bg-brand-teal text-white font-semibold text-lg hover:bg-[#25a08d] hover:shadow-[0_0_20px_rgba(45,191,168,0.3)] transition-all duration-300 transform active:scale-[0.98]"
+                th:text="#{login.btn.enter}">
+            Login
+        </button>
+    </form>
+
+    <div class="relative flex py-6 items-center">
+        <div class="flex-grow border-t border-gray-700"></div>
+        <span class="flex-shrink mx-4 text-gray-500 text-xs uppercase tracking-widest" th:text="#{login.or}">OU</span>
+        <div class="flex-grow border-t border-gray-700"></div>
+    </div>
+
+    <div class="flex justify-center gap-4">
+        <a href="/oauth2/authorization/google"
+           class="flex-1 flex items-center justify-center p-3 rounded-xl bg-gray-800 border border-gray-700 text-white font-medium hover:bg-gray-700 hover:border-gray-600 transition-all duration-200 group">
+            <svg class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform" viewBox="0 0 48 48">
+                <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.02 13.97 17.6 9.5 24 9.5z"></path>
+                <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.4-4.55H24v8.51h12.8c-.57 3.03-2.31 5.48-4.91 7.23l7.3 5.63C44.7 38.63 46.98 32.07 46.98 24.55z"></path>
+                <path fill="#34A853" d="M10.53 28.59C9.99 26.98 9.68 25.28 9.68 23.5c0-1.78.31-3.48.85-5.09l-7.98-6.19C.92 14.42 0 18.82 0 23.5s.92 9.08 2.56 12.79l7.97-6.7z"></path>
+                <path fill="#FBBC05" d="M24 48c6.47 0 11.94-2.13 15.89-5.81l-7.3-5.63c-2.11 1.41-4.79 2.2-7.59 2.2-6.4 0-11.98-4.47-13.97-10.48l-7.98 6.19C6.51 42.62 14.62 48 24 48z"></path>
+            </svg>
+            <span th:text="#{login.btn.google}">Google</span>
+        </a>
+    </div>
+
+    <div class="mt-8 text-center">
+        <a th:href="@{/register}" class="text-sm text-gray-500 hover:text-white transition-colors">
+            <span th:text="#{login.subtitle}">Não tem conta?</span>
+            <span class="text-brand-teal font-semibold" th:text="#{login.signup}">Criar conta</span>
+        </a>
+    </div>
+
+</div>
 
 </body>
 </html>

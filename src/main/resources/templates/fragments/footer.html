@@ -1,3 +1,7 @@
-<footer th:fragment="footerComponent" class="w-full bg-cyan-700 text-center p-5">
-    <p> Lorem ipsum indolor</p>
+<footer th:fragment="footerComponent"
+        class="w-full bg-cyan-700 text-center p-5">
+
+    <p th:text="#{footer.copy.field}" class="text-white font-bold">
+        Texto original será substituído
+    </p>
 </footer>

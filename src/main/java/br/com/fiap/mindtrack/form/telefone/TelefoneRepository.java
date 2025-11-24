@@ -1,4 +1,4 @@
-package br.com.fiap.mindtrack.telefone;
+package br.com.fiap.mindtrack.form.telefone;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
