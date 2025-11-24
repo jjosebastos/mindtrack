@@ -10,7 +10,7 @@ CREATE TABLE t_mt_user (
      nm_last VARCHAR(40) NOT NULL,
      ad_email VARCHAR(255) NOT NULL,
      pw_security VARCHAR(72),
-     us_role CHAR(5) NOT NULL,
+     us_role VARCHAR(20) NOT NULL,
      au_provider VARCHAR(20),
      vl_lang VARCHAR(5),
      ts_creation TIMESTAMP DEFAULT NOW(),
